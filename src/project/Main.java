@@ -1,94 +1,43 @@
 package project;
 
 import project.domein.*;
+import project.tests.*;
 import project.persistence.*;
 
+
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.List;
 
 public class Main {
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws SQLException {
 
 
-        private static void testReizigerDAO(ReizigerDAOPsql rdao) throws SQLException {
-            // get reizigers
-            List<Reiziger> reizigers = rdao.findAll();
-            System.out.println("[Test] ReizigerDAO.findAll() geeft de volgende reizigers:");
-            for (Reiziger r : reizigers) {
-                System.out.println(r);
-            }
-            System.out.println();
+        Connection connection = getConnection();
 
-            // create reiziger
-            String gbdatum = "1981-03-14";
-            Reiziger sietske = new Reiziger(77, "S", "", "Boers", java.sql.Date.valueOf(gbdatum));
-            System.out.print("[Test] Eerst " + reizigers.size() + " reizigers, na ReizigerDAO.save() ");
-            rdao.save(sietske);
-            reizigers = rdao.findAll();
-            System.out.println(reizigers.size() + " reizigers\n");
-
-            // update reiziger
-            String gbdatumupdate = "1997-05-31";
-            Reiziger reizigerToUpdate = new Reiziger(77,"m g f j","", "koot", java.sql.Date.valueOf(gbdatumupdate));
-            rdao.update(reizigerToUpdate);
-            for (Reiziger r : reizigers){
-                if (r.getReiziger_id() == 77){
-                    System.out.println("de volgende gebruiker is aangepast: "+r);
-                }
-                else {
-                    System.out.println("updaten reiziger niet gelukt");
-                }
-            }
-            //delete reiziger
-
-            int deleteOpId = 77;
-            for(Reiziger r : reizigers){
-                if (r.getReiziger_id() == deleteOpId){
-                    rdao.delete(r);
-                    System.out.println("delete van reiziger succesvol");
-                } else {
-                    System.out.println("Delete van reiziger niet gelukt");
-                }
-            }
-
+        try {
+            ReizigerDAOPsql rdao = new ReizigerDAOPsql(connection);
+            test.testReizigerDAO(rdao);
+        } catch (Exception e){
+            System.out.println("Exception gegeven: "+e);
         }
+    }
 
-        private static void testAdresDAO(AdresDAOPsql adao) throws SQLException {
-            // get adres
-            List<Adres> adressen = adao.findAll();
-            System.out.println("[Test] AdresDAO.findAll() geeft de volgende adressen:");
-            for (Adres a : adressen) {
-                System.out.println(a);
-            }
-            //create adres
-            Adres nieuwAdres = new Adres(909,"1234AB",17,"straatweg","utrecht", 77);
-            System.out.print("[Test] Eerst " + adressen.size() + " adressen, na AdresDAO.save() ");
-            adao.save(nieuwAdres);
-            adressen = adao.findall();
-            System.out.println(adressen.size()+"adressen");
 
-            //update adres
-            Adres adresToUpdate = new Adres(909, "4321BA", 71, "wegstraat", "sticht",77);
-            adao.update(adresToUpdate);
-            for (Adres a : adressen){
-                if (a.getReiziger_id() == 77){
-                    System.out.println("De volgende gebruiker is aangepast"+ a);
-                } else {
-                    System.out.println("updaten adres niet gelukt");
-                }
-            }
 
-            //delete adres
-            int deleteOpAdresId = 909;
-            for(Adres a : adressen){
-                if (a.getAdres_id() == deleteOpAdresId){
-                    adao.delete(a);
-                    System.out.println("delete van adres succesvol");
-                } else {
-                    System.out.println("Delete van adres niet gelukt");
-                }
-            }
+
+
+    // get connection
+    protected static Connection getConnection() {
+        Connection connection = null;
+        String url = "jdbc:postgresql://localhost/ovchip?user=postgres&password=admin";
+        try {
+            connection = DriverManager.getConnection(url);
+        } catch (SQLException sqle){
+            System.out.println("Connection fail"+sqle);
         }
+        return connection;
     }
 }

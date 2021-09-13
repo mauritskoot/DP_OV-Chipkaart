@@ -7,13 +7,18 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdresDAOPsql extends PostgresBaseDao implements AdresDAO{
+public class AdresDAOPsql implements AdresDAO{
+    private Connection conn;
+
+    public AdresDAOPsql(Connection conn) {
+        this.conn = conn;
+    }
 
     @Override
     public boolean save(Adres adres) {
-        try (Connection connection = super.getConnection()){
+        try {
             String query = "INSERT INTO adres (adres_id,postcode, huisnummer, straat, woonplaats, reiziger_id)values (?,?,?,?,?)";
-            PreparedStatement ps = connection.prepareStatement(query);
+            PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1,adres.getAdres_id());
             ps.setInt(2,adres.getHuisnummer());
             ps.setString(3,adres.getStraat());
@@ -29,9 +34,9 @@ public class AdresDAOPsql extends PostgresBaseDao implements AdresDAO{
 
     @Override
     public boolean update(Adres adres) {
-        try (Connection connection = super.getConnection()) {
+        try {
             String query = "UPDATE adres SET postcode = ?, huisnummer = ?, straat = ?, woonplaats = ?, reiziger_nummer = ? WHERE reiziger_id=?";
-            PreparedStatement ps = connection.prepareStatement(query);
+            PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, adres.getAdres_id());
             ps.setString(2, adres.getPostcode());
             ps.setInt(3, adres.getHuisnummer());
@@ -48,9 +53,9 @@ public class AdresDAOPsql extends PostgresBaseDao implements AdresDAO{
 
     @Override
     public boolean delete(Adres adres) {
-        try (Connection connection = super.getConnection()) {
+        try {
             String query = "DELETE FROM adres WHERE adres_id=?";
-            PreparedStatement ps = connection.prepareStatement(query);
+            PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, adres.getAdres_id());
             ps.executeUpdate();
 
@@ -64,8 +69,8 @@ public class AdresDAOPsql extends PostgresBaseDao implements AdresDAO{
     public Adres findByReiziger(Reiziger reiziger) {
         Adres adres = null;
 
-        try (Connection connection = super.getConnection()) {
-            Statement s = connection.createStatement();
+        try {
+            Statement s = conn.createStatement();
             ResultSet rs = s.executeQuery("SELECT adres_id, postcode, huisnummer, straat, woonplaats, reiziger_id FROM adres WHERE reiziger_id = '"
                     + reiziger.getReiziger_id() + "';");
 
@@ -92,8 +97,8 @@ public class AdresDAOPsql extends PostgresBaseDao implements AdresDAO{
     public List<Adres> findAll() {
         List<Adres> alleAdressen = new ArrayList<>();
 
-        try(Connection connection = super.getConnection()){
-            Statement s = connection.createStatement();
+        try {
+            Statement s = conn.createStatement();
             ResultSet rs = s.executeQuery("SELECT (adres_id, postcode, huisnummer, straat, woonplaats, reiziger_id) FROM adres");
 
             while (rs.next()){

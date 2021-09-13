@@ -8,13 +8,18 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReizigerDAOPsql extends PostgresBaseDao implements ReizigerDAO {
+public class ReizigerDAOPsql implements ReizigerDAO {
+    private Connection conn;
+
+    public ReizigerDAOPsql(Connection conn) {
+        this.conn = conn;
+    }
 
     @Override
     public boolean save(Reiziger reiziger) {
-        try (Connection connection = super.getConnection()) {
+        try  {
             String query = "INSERT INTO reiziger(reiziger_id,voorletters,tussenvoegsel,achternaam,geboortedatum)values(?,?,?,?,?)";
-            PreparedStatement ps = connection.prepareStatement(query);
+            PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, reiziger.getReiziger_id());
             ps.setString(2, reiziger.getVoorletters());
             ps.setString(3, reiziger.getTussenvoegsel());
@@ -30,9 +35,9 @@ public class ReizigerDAOPsql extends PostgresBaseDao implements ReizigerDAO {
 
     @Override
     public boolean update(Reiziger reiziger) {
-        try (Connection connection = super.getConnection()) {
+        try  {
             String query = "UPDATE reiziger SET voorletters = ?, tussenvoegsel = ?, achternaam = ?, geboortedatum = ? WHERE reiziger_id=?";
-            PreparedStatement ps = connection.prepareStatement(query);
+            PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, reiziger.getReiziger_id());
             ps.setString(2, reiziger.getVoorletters());
             ps.setString(3, reiziger.getTussenvoegsel());
@@ -48,9 +53,9 @@ public class ReizigerDAOPsql extends PostgresBaseDao implements ReizigerDAO {
 
     @Override
     public boolean delete(Reiziger reiziger) {
-        try (Connection connection = super.getConnection()) {
+        try  {
             String query = "DELETE FROM reiziger WHERE reiziger_id=?";
-            PreparedStatement ps = connection.prepareStatement(query);
+            PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, reiziger.getReiziger_id());
             ps.executeUpdate();
 
@@ -64,8 +69,8 @@ public class ReizigerDAOPsql extends PostgresBaseDao implements ReizigerDAO {
     public Reiziger findById(int id) {
         Reiziger reiziger = null;
 
-        try (Connection connection = super.getConnection()) {
-            Statement s = connection.createStatement();
+        try {
+            Statement s = conn.createStatement();
             ResultSet rs = s.executeQuery(
                     "SELECT reiziger_id,voorletters,tussenvoegsel,achternaam,geboortedatum FROM reiziger WHERE reiziger_id = '"
                             + id + "';");
@@ -88,8 +93,8 @@ public class ReizigerDAOPsql extends PostgresBaseDao implements ReizigerDAO {
     public List<Reiziger> findByGbdatum(String datum) {
         List<Reiziger> reizigers = new ArrayList<>();
 
-        try (Connection connection = super.getConnection()) {
-            Statement s = connection.createStatement();
+        try  {
+            Statement s = conn.createStatement();
             ResultSet rs = s.executeQuery("SELECT reiziger_id,voorletters,tussenvoegsel,achternaam,geboortedatum FROM reiziger WHERE geboortedatum ='" + datum + "');");
 
             while (rs.next()) {
@@ -113,9 +118,9 @@ public class ReizigerDAOPsql extends PostgresBaseDao implements ReizigerDAO {
     public List<Reiziger> findAll() {
         List<Reiziger> alleReizigers = new ArrayList<>();
 
-        try (Connection connection = super.getConnection()) {
-            Statement s = connection.createStatement();
-            ResultSet rs = s.executeQuery("SELECT (reiziger_id,voorletters,tussenvoegsel,achternaam,geboortedatum) FROM reiziger");
+        try  {
+            Statement s = conn.createStatement();
+            ResultSet rs = s.executeQuery("SELECT reiziger_id,voorletters,tussenvoegsel,achternaam,geboortedatum FROM reiziger");
 
             while (rs.next()){
                 int reiziger_id = rs.getInt("reiziger_id");
