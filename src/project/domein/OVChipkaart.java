@@ -5,7 +5,7 @@ import java.sql.Date;
 public class OVChipkaart {
     private int kaartNummer;
     private Date geldigTot;
-    private String klase;
+    private String klasse;
     private int saldo;
     private int reizigerId;
 }
