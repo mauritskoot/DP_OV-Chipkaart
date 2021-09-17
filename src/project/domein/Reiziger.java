@@ -3,7 +3,7 @@ package project.domein;
 import java.sql.Date;
 
 public class Reiziger {
-    private int reiziger_id;
+    private int reizigerId;
     private String voorletters;
     private String tussenvoegsel;
     private String achternaam;
@@ -11,20 +11,19 @@ public class Reiziger {
     private Adres adres;
 
     public Reiziger(int reiziger_id, String voorletters, String tussenvoegsel, String achternaam, Date geboortedatum){
-        this.reiziger_id = reiziger_id;
+        this.reizigerId = reiziger_id;
         this.voorletters = voorletters;
         this.tussenvoegsel = tussenvoegsel;
         this.achternaam = achternaam;
         this.geboortedatum = geboortedatum;
     }
 
-
-    public int getReiziger_id() {
-        return reiziger_id;
+    public int getReizigerId() {
+        return reizigerId;
     }
 
-    public void setReiziger_id(int reiziger_id) {
-        this.reiziger_id = reiziger_id;
+    public void setReizigerId(int reizigerId) {
+        this.reizigerId = reizigerId;
     }
 
     public String getVoorletters() {
@@ -59,13 +58,22 @@ public class Reiziger {
         this.geboortedatum = geboortedatum;
     }
 
+    public Adres getAdres() {
+        return adres;
+    }
+
+    public void setAdres(Adres adres) {
+        this.adres = adres;
+    }
+
     public String toString() {
         return "Reiziger{" +
-                "reiziger_id=" + reiziger_id +
+                "reiziger_id=" + reizigerId +
                 ", voorletters='" + voorletters + '\'' +
                 ", tussenvoegsel='" + tussenvoegsel + '\'' +
                 ", achternaam='" + achternaam + '\'' +
                 ", geboortedatum=" + geboortedatum +
+                ", Adres= "+ adres +
                 '}';
     }
 }

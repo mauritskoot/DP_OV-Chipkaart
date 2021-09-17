@@ -3,28 +3,37 @@ package project.domein;
 import java.sql.Date;
 
 public class Adres {
-    int adres_id;
-    String postcode;
-    int huisnummer;
-    String straat;
-    String woonplaats;
-    int reiziger_id;
+    private int adresId;
+    private String postcode;
+    private String huisnummer;
+    private String straat;
+    private String woonplaats;
+    private Reiziger reiziger;
 
-    public Adres(int adres_id, String postcode, int huisnummer, String straat, String woonplaats, int reiziger_id){
-        this.adres_id = adres_id;
+    public Adres(int adres_id, String postcode, String huisnummer, String straat, String woonplaats, Reiziger reiziger){
+        this.adresId = adres_id;
         this.postcode = postcode;
         this.huisnummer = huisnummer;
         this.straat = straat;
         this.woonplaats = woonplaats;
-        this.reiziger_id = reiziger_id;
+        this.reiziger = reiziger;
+        reiziger.setAdres(this);
     }
 
-    public int getAdres_id() {
-        return adres_id;
+    public int getAdresId() {
+        return adresId;
+    }
+
+    public void setAdresId(int adresId) {
+        this.adresId = adresId;
+    }
+
+    public int getAdres_d() {
+        return adresId;
     }
 
     public void setAdres_id(int adres_id) {
-        this.adres_id = adres_id;
+        this.adresId = adres_id;
     }
 
     public String getPostcode() {
@@ -35,11 +44,11 @@ public class Adres {
         this.postcode = postcode;
     }
 
-    public int getHuisnummer() {
+    public String getHuisnummer() {
         return huisnummer;
     }
 
-    public void setHuisnummer(int huisnummer) {
+    public void setHuisnummer(String huisnummer) {
         this.huisnummer = huisnummer;
     }
 
@@ -59,22 +68,21 @@ public class Adres {
         this.woonplaats = woonplaats;
     }
 
-    public int getReiziger_id() {
-        return reiziger_id;
+    public Reiziger getReiziger() {
+        return reiziger;
     }
 
-    public void setReiziger_id(int reiziger_id) {
-        this.reiziger_id = reiziger_id;
+    public void setReiziger_id(Reiziger reiziger) {
+        this.reiziger = reiziger;
     }
     @Override
     public String toString() {
         return "Adres{" +
-                "adres_id=" + adres_id +
+                "adres_id=" + adresId +
                 ", postcode='" + postcode + '\'' +
                 ", huisnummer=" + huisnummer +
                 ", straat='" + straat + '\'' +
                 ", woonplaats='" + woonplaats + '\'' +
-                ", reiziger_id=" + reiziger_id +
                 '}';
     }
 }
