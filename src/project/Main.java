@@ -59,6 +59,8 @@ public class Main {
         System.out.println("--------------------------------------");
         System.out.println(odao.findByReiziger(reiziger2));
         odao.delete(ovChipkaart1);
+        System.out.println("--------------------------------------------------------");
+        System.out.println(odao.findAll());
 
     }
 }

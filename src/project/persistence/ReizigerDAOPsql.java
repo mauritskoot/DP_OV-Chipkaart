@@ -160,6 +160,7 @@ public class ReizigerDAOPsql implements ReizigerDAO {
     @Override
     public List<Reiziger> findAll() {
         List<Reiziger> alleReizigers = new ArrayList<>();
+        List<OVChipkaart> ovChipkaarten = new ArrayList<>();
 
         try  {
             String query = "SELECT reiziger_id,voorletters,tussenvoegsel,achternaam,geboortedatum FROM reiziger";
@@ -174,6 +175,8 @@ public class ReizigerDAOPsql implements ReizigerDAO {
                 Date geboortedatum = rs.getDate("geboortedatum");
                 Reiziger nieuweReiziger = new Reiziger(reizigerId, voorletters, tussenvoegsel, achternaam, geboortedatum);
                 nieuweReiziger.setAdres(adao.findByReiziger(nieuweReiziger));
+                ovChipkaarten = nieuweReiziger.getOvChipkaarten();
+                nieuweReiziger.setOvChipkaarten(ovChipkaarten);
                 alleReizigers.add(nieuweReiziger);
 
             }
