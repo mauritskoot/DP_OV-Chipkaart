@@ -2,6 +2,7 @@ package project.persistence;
 
 
 import project.domein.Adres;
+import project.domein.OVChipkaart;
 import project.domein.Reiziger;
 
 import java.sql.Connection;
@@ -13,10 +14,12 @@ import java.util.List;
 public class ReizigerDAOPsql implements ReizigerDAO {
     private Connection conn;
     private AdresDAO adao;
+    private OVChipkaartDAO odao;
 
     public void setAdao(AdresDAO adao) {
         this.adao = adao;
     }
+    public void setOdao(OVChipkaartDAO odao){this.odao = odao;}
 
     public ReizigerDAOPsql(Connection conn) {
         this.conn = conn;
@@ -79,9 +82,16 @@ public class ReizigerDAOPsql implements ReizigerDAO {
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, reiziger.getReizigerId());
             Adres adres = adao.findByReiziger(reiziger);
+            List<OVChipkaart> ovChipkaarten = odao.findByReiziger(reiziger);
+
             if(adres != null){
                 adao.delete(adres);
             }
+            //klopt deze forloop zo in geval van meerdere ov chipkaarten op 1 gebruiker?
+            for(OVChipkaart ovChipkaart : ovChipkaarten){
+                odao.delete(ovChipkaart);
+            }
+
             ps.executeUpdate();
             ps.close();
 

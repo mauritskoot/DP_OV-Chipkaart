@@ -15,6 +15,8 @@ public class AdresDAOPsql implements AdresDAO{
         this.rdao = rdao;
     }
 
+
+
     public AdresDAOPsql(Connection conn) {
         this.conn = conn;
     }
@@ -67,6 +69,7 @@ public class AdresDAOPsql implements AdresDAO{
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, adres.getAdresId());
             ps.executeUpdate();
+            ps.close();
 
         } catch (SQLException sqe) {
             System.out.println(sqe.getMessage());
@@ -124,6 +127,9 @@ public class AdresDAOPsql implements AdresDAO{
                 Adres adres = new Adres(adresId, postcode, huisnummer, straat, woonplaats, rdao.findById(reizigerId));
                 alleAdressen.add(adres);
             }
+            s.close();
+            rs.close();
+
         } catch (SQLException sqe) {
             System.out.println(sqe.getMessage());
         }

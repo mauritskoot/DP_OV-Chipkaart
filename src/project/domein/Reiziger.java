@@ -1,6 +1,7 @@
 package project.domein;
 
 import java.sql.Date;
+import java.util.List;
 
 public class Reiziger {
     private int reizigerId;
@@ -9,6 +10,8 @@ public class Reiziger {
     private String achternaam;
     private Date geboortedatum;
     private Adres adres;
+    //list omdat één reiziger een of meerdere ov chipkaarten kan hebben
+    private List<OVChipkaart> ovChipkaarten;
 
     public Reiziger(int reiziger_id, String voorletters, String tussenvoegsel, String achternaam, Date geboortedatum){
         this.reizigerId = reiziger_id;
@@ -66,14 +69,25 @@ public class Reiziger {
         this.adres = adres;
     }
 
+    public List<OVChipkaart> getOvChipkaarten() {
+        return ovChipkaarten;
+    }
+
+    public void setOvChipkaarten(List<OVChipkaart> ovChipkaarten) {
+        this.ovChipkaarten = ovChipkaarten;
+    }
+
+
     public String toString() {
         return "Reiziger{" +
-                "reiziger_id=" + reizigerId +
+                "reizigerId=" + reizigerId +
                 ", voorletters='" + voorletters + '\'' +
                 ", tussenvoegsel='" + tussenvoegsel + '\'' +
                 ", achternaam='" + achternaam + '\'' +
                 ", geboortedatum=" + geboortedatum +
-                ", Adres= "+ adres +
+                ", adres=" + adres +
+                //moet hier een whileloop voor meerder ovchipkaarten voor 1 reiziger?
+                ", ovChipkaarten=" + ovChipkaarten +
                 '}';
     }
 }

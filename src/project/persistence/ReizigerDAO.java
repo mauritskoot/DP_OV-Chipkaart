@@ -2,7 +2,6 @@ package project.persistence;
 
 import project.domein.Reiziger;
 
-import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
