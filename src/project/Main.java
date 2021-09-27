@@ -32,21 +32,16 @@ public class Main {
         OVChipkaart ovChipkaart2 = new OVChipkaart(15,java.sql.Date.valueOf("2023-01-01"), 2, 99.00,reiziger);
 
 
-        System.out.println(adres);
-        System.out.println("---------------------------------------------------------------------");
-
+        System.out.println("---------------------------------------------------------------------deletes");
         rdao.delete(reiziger);
         odao.delete(ovChipkaart1);
         adao.delete(adres);
-        System.out.println("-----------------------------------------------");
+        System.out.println("----------------------------------------------- saves");
         rdao.save(reiziger);
         odao.save(ovChipkaart1);
         odao.save(ovChipkaart2);
-        System.out.println(ovChipkaart1);
         adao.save(adres);
         System.out.println("------------------------------ find by id ");
-//        System.out.println(rdao.findAll());
-        System.out.println(rdao.findById(100));
-
+        System.out.println(rdao.findAll());
     }
 }
