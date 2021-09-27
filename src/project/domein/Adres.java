@@ -82,7 +82,7 @@ public class Adres {
                 ", postcode='" + postcode + '\'' +
                 ", huisnummer=" + huisnummer +
                 ", straat='" + straat + '\'' +
-                ", woonplaats='" + woonplaats + '\'' +
+                ", woonplaats='" + woonplaats + '\''+
                 '}';
     }
 }

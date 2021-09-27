@@ -27,40 +27,26 @@ public class Main {
             rdao.setOdao(odao);
 
         Reiziger reiziger = new Reiziger(100,"m", "","steen",java.sql.Date.valueOf("2010-01-02"));
-        Reiziger reiziger2 = new Reiziger(101,"m", "","verstappen",java.sql.Date.valueOf("1997-02-02"));
         Adres adres = new Adres(17,"7890AB", "12", "Straatweg", "Utrecht", reiziger);
-        OVChipkaart ovChipkaart1 = new OVChipkaart(11,java.sql.Date.valueOf("2023-01-01"), 1,10.00,reiziger2);
+        OVChipkaart ovChipkaart1 = new OVChipkaart(11,java.sql.Date.valueOf("2023-01-01"), 1,10.00,reiziger);
+        OVChipkaart ovChipkaart2 = new OVChipkaart(15,java.sql.Date.valueOf("2023-01-01"), 2, 99.00,reiziger);
 
 
         System.out.println(adres);
         System.out.println("---------------------------------------------------------------------");
 
-        List<Reiziger> alleReizigers = rdao.findAll();
-        for (Reiziger r : alleReizigers){
-            System.out.println(r);
-        }
+        rdao.delete(reiziger);
+        odao.delete(ovChipkaart1);
+        adao.delete(adres);
         System.out.println("-----------------------------------------------");
         rdao.save(reiziger);
-        rdao.save(reiziger2);
-
-        List<Reiziger> alleReizigers2 = rdao.findAll();
-
-        for (Reiziger r : alleReizigers2){
-            System.out.println(r);
-        }
-        rdao.delete(reiziger);
-        System.out.println("--------------------------------");
-        System.out.println(adao.findAll());
-        System.out.println("-----------------------------------------------------------");
-        System.out.println(rdao.findAll());
-        System.out.println("---------------------------------------------------- testen odao");
         odao.save(ovChipkaart1);
-        System.out.println(odao.findAll());
-        System.out.println("--------------------------------------");
-        System.out.println(odao.findByReiziger(reiziger2));
-        odao.delete(ovChipkaart1);
-        System.out.println("--------------------------------------------------------");
-        System.out.println(odao.findAll());
+        odao.save(ovChipkaart2);
+        System.out.println(ovChipkaart1);
+        adao.save(adres);
+        System.out.println("------------------------------ find by id ");
+//        System.out.println(rdao.findAll());
+        System.out.println(rdao.findById(100));
 
     }
 }

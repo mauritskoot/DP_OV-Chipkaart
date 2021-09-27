@@ -1,6 +1,7 @@
 package project.domein;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Reiziger {
@@ -10,8 +11,7 @@ public class Reiziger {
     private String achternaam;
     private Date geboortedatum;
     private Adres adres;
-    //list omdat één reiziger een of meerdere ov chipkaarten kan hebben
-    private List<OVChipkaart> ovChipkaarten;
+    private List<OVChipkaart> ovChipkaarten = new ArrayList<>();
 
     public Reiziger(int reiziger_id, String voorletters, String tussenvoegsel, String achternaam, Date geboortedatum){
         this.reizigerId = reiziger_id;
@@ -77,17 +77,34 @@ public class Reiziger {
         this.ovChipkaarten = ovChipkaarten;
     }
 
+    public void addOVChipkaart(OVChipkaart ovChipkaart){
+        if(!ovChipkaarten.contains(ovChipkaart)){
+            ovChipkaarten.add(ovChipkaart);
+        }
+    }
+
+    public void removeOVChipkaart(OVChipkaart ovChipkaart){
+        if(ovChipkaarten.contains(ovChipkaart)){
+            ovChipkaarten.remove(ovChipkaart);
+        }
+    }
+
 
     public String toString() {
-        return "Reiziger{" +
+        String result =
+                "Reiziger{" +
                 "reizigerId=" + reizigerId +
                 ", voorletters='" + voorletters + '\'' +
                 ", tussenvoegsel='" + tussenvoegsel + '\'' +
                 ", achternaam='" + achternaam + '\'' +
-                ", geboortedatum=" + geboortedatum +
-                ", adres=" + adres +
-                //moet hier een whileloop voor meerder ovchipkaarten voor 1 reiziger?
-                ", ovChipkaarten=" + ovChipkaarten +
+                ", geboortedatum=" + geboortedatum +'\'' +
+                ", adres=" + adres +'\'' +
+                        ", ovkaarten= " +
                 '}';
+
+                for(OVChipkaart ovChipkaart : ovChipkaarten){
+                    result += ovChipkaart;;
+                    }
+                return result;
     }
 }
