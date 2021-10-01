@@ -101,7 +101,7 @@ public class Reiziger {
                 ", adres=" + adres +'\'' +
                         ", ovkaarten= " +
                 '}';
-
+                //loopt over chipkaarten voor als er meerdere zijn
                 for(OVChipkaart ovChipkaart : ovChipkaarten){
                     result += ovChipkaart;;
                     }
