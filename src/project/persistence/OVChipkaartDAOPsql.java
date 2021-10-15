@@ -93,7 +93,6 @@ public class OVChipkaartDAOPsql implements OVChipkaartDAO {
                 Date geldigTot = rs.getDate("geldig_tot");
                 int klasse = rs.getInt("klasse");
                 double saldo = rs.getDouble("saldo");
-                //weet niet zeker of de Reiziger reiziger nu klopt, loop hier enigszins vast
                 Reiziger reiziger = this.rdao.findById(rs.getInt("reiziger_id"));
                 OVChipkaart ovChipkaart = new OVChipkaart(kaartNummer, geldigTot, klasse, saldo, reiziger);
                 alleOVChipkaarten.add(ovChipkaart);

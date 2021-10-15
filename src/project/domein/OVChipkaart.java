@@ -1,6 +1,9 @@
 package project.domein;
 
+import java.awt.*;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 public class OVChipkaart {
     private int kaartNummer;
@@ -8,6 +11,7 @@ public class OVChipkaart {
     private int klasse;
     private double saldo;
     private Reiziger reiziger;
+    private List<Product> producten = new ArrayList<>();
 
     public OVChipkaart(int kaartNummer, Date geldigTot, int klasse, double saldo, Reiziger reiziger) {
         this.kaartNummer = kaartNummer;
@@ -47,14 +51,37 @@ public class OVChipkaart {
     public void setReiziger(Reiziger reiziger) {
         this.reiziger = reiziger;
     }
+    public List<Product> getProducten() {
+        return producten;
+    }
+    public void setProducten(List<Product> producten) {
+        this.producten = producten;
+    }
+
+    public void addProduct(Product product){
+        if(!producten.contains(product)){
+            producten.add(product);
+        }
+    }
+
+    public void removeProduct(Product product){
+        if(producten.contains(product)){
+            producten.remove(product);
+        }
+    }
 
     @Override
     public String toString() {
-        return "OVChipkaart{" +
+        StringBuilder sb = new StringBuilder("OVChipkaart{" +
                 "kaartNummer=" + kaartNummer +
                 ", geldigTot=" + geldigTot +
                 ", klasse=" + klasse +
                 ", saldo=" + saldo +
-                '}';
+                ", reiziger=" + reiziger.getReizigerId() +
+                '}');
+        for (Product product : producten){
+            sb.append(product);
+        }
+        return sb.toString();
     }
 }
